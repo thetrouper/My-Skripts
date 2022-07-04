@@ -1,0 +1,90 @@
+#<3 - ❤
+#:star: - ✮
+#:yes: - ✔
+#:no: - ✖
+#:java: - ☕
+#:arrow: - ➜
+#:shrug: - ¯\_(ツ)_/¯
+#:tableflip: - (╯°□°）╯︵ ┻━┻
+#o/ - ( ﾟ◡ﾟ)/
+#:123: - 123
+#:totem: - ◎_◎
+#:typing: ✎...
+#:maths: - √(π+x)=L
+#:snail: - @'-'
+#:thinking: - (0.o?)
+#:gimme: - ༼つ ◕_◕ ༽つ
+#:wizard: - ('-')⊃━☆ﾟ.*･｡ﾟ
+#:pvp: - ⚔
+#:peace: - ✌
+#:oof: - OOF
+#:snow: - ☃
+#:dog: - (ᵔᴥᵔ)
+#:sloth: - ( ⬩ ⊝ ⬩ )
+#^_^ - ^_^
+#:dab: - <o/
+#:cat: - = ＾● ⋏ ●＾ =
+#:yey: - ヽ (◕◡◕) ﾉ
+#h/ - ヽ(^◇^*)/
+#:dj: - ヽ(⌐■_■)ノ♬
+#:cute: - (✿ᴖ‿ᴖ)
+#^-^ - ^-^
+command /emotes:
+	trigger:
+		send "&b---- Emotes For &6&lKing &bRank ----" to player
+		send ":smile: with &e☺&f" to player
+		send ":frown: with &9☹&f" to player
+		send "<3 with &c❤&f" to player
+		send ":star: with &6✮&f" to player
+		send ":yes: with &a✔&f" to player
+		send ":no: with &c✖&f" to player
+		send ":java: with &6☕&f" to player
+		send ":arrow: with &e➜&f" to player
+		send ":shrug: with &e¯\_(ツ)_/¯&f" to player
+		send ":tableflip: with &c(╯°□°）╯&f︵ ┻━┻&f" to player
+		send "o/ with &d( ﾟ◡ﾟ)/&f" to player
+		send ":stare: with &b◎&e_&b◎&f" to player
+		send ":typing: with &e✎&6...&f" to player
+		send ":maths: with &a√&e(&aπ+x&e)&a=&c&lL&f" to player
+		send ":snail: with &e@&a'&e-&a'&f" to player
+		send ":thinking: with &6(&a0&6.&ao&c?&6)&f" to player
+		send ":gimme: with &b༼つ ◕_◕ ༽つ&f" to player
+		send ":wizard: with &e(&b'&e-&b'&e)⊃&c━&d☆ﾟ.*･｡ﾟ&f" to player
+		send ":pvp: with &c⚔&f" to player
+		send ":peace: with &a✌&f" to player
+		send ":oof: with &c&lOOF&f" to player
+		send ":puffer: with &e<('O')>&f" to player
+		send ":snow: with &f☃&f" to player
+		send ":dog: with &6(ᵔᴥᵔ)&f" to player
+		send ":sloth: with &6(&7⬩&6 ⊝ &7⬩&6)&f" to player
+		send ":cat: with &e=&b＾● ⋏ ●＾&e=&f" to player
+		send ":dj: with &f&dヽ&b(&a⌐&e■&6_&c■&5)&bノ" to player
+on chat:
+	if player has permission "emote.use":
+		replace all ":smile:" with "&e☺&f" in message
+		replace all ":frown:" with "&9☹&f" in message
+		replace all "<3" with "&c❤&f" in message
+		replace all ":star:" with "&6✮&f" in message
+		replace all ":yes:" with "&a✔&f" in message
+		replace all ":no:" with "&c✖&f" in message
+		replace all ":java:" with "&6☕&f" in message
+		replace all ":arrow:" with "&e➜&f" in message
+		replace all ":shrug:" with "&e¯\_(ツ)_/¯&f" in message
+		replace all ":tableflip:" with "&c(╯°□°）╯&f︵ ┻━┻&f" in message
+		replace all "o/" with "&d( ﾟ◡ﾟ)/&f" in message
+		replace all ":stare:" with "&b◎&e_&b◎&f" in message
+		replace all ":typing:" with "&e✎&6...&f" in message
+		replace all ":maths:" with "&a√&e(&aπ+x&e)&a=&c&lL&f" in message
+		replace all ":snail:" with "&e@&a'&e-&a'&f" in message
+		replace all ":thinking:" with "&6(&a0&6.&ao&c?&6)&f" in message
+		replace all ":gimme:" with "&b༼つ ◕_◕ ༽つ&f" in message
+		replace all ":wizard:" with "&e(&b'&e-&b'&e)⊃&c━&d☆ﾟ.*･｡ﾟ&f" in message
+		replace all ":pvp:" with "&c⚔&f" in message
+		replace all ":peace:" with "&a✌&f" in message
+		replace all ":oof:" with "&c&lOOF&f" in message
+		replace all ":puffer:" with "&e<('O')>&f" in message
+		replace all ":snow:" with "&f☃&f" in message
+		replace all ":dog:" with "&6(ᵔᴥᵔ)&f" in message
+		replace all ":sloth:" with "&6(&7⬩&6 ⊝ &7⬩&6)&f" in message
+		replace all ":cat:" with "&e=&b＾● ⋏ ●＾&e=&f" in message
+		replace all ":dj:" with "&f&dヽ&b(&a⌐&e■&6_&c■&a)&bノ&d♬&f" in message

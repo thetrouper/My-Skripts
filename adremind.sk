@@ -1,0 +1,92 @@
+#==============================================
+# Skript Made By TheTrouper#6969
+# DO NOT DISTRIBUTE WITHOUT PREMISSION
+# Copy#001
+#==============================================
+options:
+
+	# The Prefix for all chat messages
+	Prefix: &7[&aA&bR&7]
+	
+	# Set What Sound will be played 1 minute before kick
+	Sound: "block.note_block.flute"
+	
+	# What will be broadcasted when the player is kicked
+	Broadcast: &bHas just been sent back to the lobby to advertise, You too can set advertise reminders with /ad!
+	
+	# Set the message for what will be sent at the 1 minute warning
+	Warning: &c&lWarning: &7You will be kicked in 1 minute to advertise!
+
+command ad <text> [<text>]:
+	usage: /ad (Minehut rank)<default|vip|pro|legend|patron>
+	trigger:
+		if arg-1 is "default":
+			send "<link:https://discord.gg/u4jjBKeydu> {@Prefix} &bYou will be kicked in 8 minutes to go /ad"
+			wait 7 minutes
+			play sound {@Sound} to player
+			send "<link:https://discord.gg/u4jjBKeydu> {@Prefix} {@Warning}" to player
+			wait 1 minute
+			broadcast "<link:https://discord.gg/u4jjBKeydu>{@Prefix} &c%player% {@Broadcast}"
+			kick player
+		else if arg-1 is "vip":
+			send "<link:https://discord.gg/u4jjBKeydu>{@Prefix} &bYou will be kicked in 7 minutes to go /ad"
+			wait 6 minutes
+			play sound {@Sound} to player
+			send "<link:https://discord.gg/u4jjBKeydu>{@Prefix} {@Warning} &7[Made By TheTrouper##6969]" to player
+			wait 1 minute
+			broadcast "<link:https://discord.gg/u4jjBKeydu>{@Prefix} &c%player% {@Broadcast} &7[Made By TheTrouper##6969]"
+			kick player
+		else if arg-1 is "pro":
+			send "<link:https://discord.gg/u4jjBKeydu>{@Prefix} &bYou will be kicked in 5 minutes to go /ad"
+			wait 4 minutes
+			play sound {@Sound} to player
+			send "<link:https://discord.gg/u4jjBKeydu>{@Prefix} {@Warning} &7[Made By TheTrouper##6969]" to player
+			wait 1 minute
+			broadcast "<link:https://discord.gg/u4jjBKeydu>{@Prefix} &c%player% {@Broadcast} &7"
+			kick player
+		else if arg-1 is "legend":
+			send "<link:https://discord.gg/u4jjBKeydu>{@Prefix} &bYou will be kicked in 3 minutes to go /ad"
+			wait 2 minutes
+			play sound {@Sound} to player
+			send "<link:https://discord.gg/u4jjBKeydu>{@Prefix} {@Warning}" to player
+			wait 1 minute
+			broadcast "<link:https://discord.gg/u4jjBKeydu>{@Prefix} &c%player% {@Broadcast}"
+			kick player
+		else if arg-1 is "patron":
+			send "<link:https://discord.gg/u4jjBKeydu>{@Prefix} &bYou will be kicked in 1 minute to go /ad"
+			wait 1 minutes
+			play sound {@Sound} to player
+			send "<link:https://discord.gg/u4jjBKeydu>{@Prefix} {@Warning}" to player
+			wait 10 seconds
+			broadcast "<link:https://discord.gg/u4jjBKeydu>{@Prefix} &c%player% {@Broadcast}"
+			kick player
+		else if arg-1 is "test":
+			send "<link:https://discord.gg/u4jjBKeydu>{@Prefix} &bYou will be fake kicked in TESTING ONLY seconds (10) to go /ad &7[Made By TheTrouper##6969]"
+			wait 10 seconds
+			play sound {@Sound} to player
+			send "<link:https://discord.gg/u4jjBKeydu>{@Prefix} TESTING ONLY you will be kicked in 10 seconds" to player
+			wait 10 seconds
+			broadcast "<link:https://discord.gg/u4jjBKeydu>{@Prefix} &c%player% has been not kicked This is for testing only {@Broadcast}"
+			send "&c&lyou would have been kicked but this is just a test"
+		else if arg-1 is "ogrestupe":
+			if length of arg-2 >= 80:
+				set {l.%player%} to length of arg-2
+				send "Ad message is too long (%{l.%player%}% Characters)"
+			else:
+				send "&d[AD] &6[Legend] %player%&r: /join ogrestupe %colored arg-2%"
+
+on tab complete:
+	if event-string contains "/ad":
+		set tab completions of position 1 to "default", "vip", "pro", "legend", "patron" and "ogrestupe"
+
+
+# Ver: 1.2
+# Changelog:
+# 1.0:
+# Arguments Added
+# 1.1:
+# Tab Completer Added
+# 1.2:
+# Options Section Added
+# Warning added before kick
+# Test mode added

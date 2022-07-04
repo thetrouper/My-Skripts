@@ -1,0 +1,261 @@
+#==============================================
+#           StaffAuth
+# Skript Made By TheTrouper#6969
+# DO NOT DISTRIBUTE WITHOUT PREMISSION
+# Skript is designed for Luckperms ONLY
+#       https://luckperms.net
+#==============================================
+
+options:
+    #Prefix
+    Prefix: &8[&6Staff&eAuth&b+&8]&r
+
+    # Group name for Helpers
+    HelperGroup: helper
+    
+    # Group name for Moderators
+    ModGroup: mod
+    
+    # Group name for Superiors
+    SupGroup: sup
+
+    #Group name for Admins
+    AdminGroup: admin
+
+    # Mode of remove permission 
+    # join - Removes staff permission on join (Better in case of crash)
+    # quit - Removes Staff permission on quit (Harder to abuse/hack into)
+    # both - Removes staff permission on both join AND quit (Most redundant)
+
+    Mode: both
+
+#==============================================
+#            DO NOT TOUCH BELOW HERE
+#     *unless you know what you are doing*
+#==============================================
+
+command /staffauth <text> <text> [<player>] [<text>]:
+    trigger:
+        if arg 1 is "setpass":
+            if player has permission "auth.master":
+
+                # Helper Password
+
+                if arg 2 is "helper":
+                    if arg 3 has permission "auth.staff":
+                        if {ishelper.%arg-3%} is true:
+                            set {helperpassword.%arg-3%} to arg 4
+                            send "{@Prefix} &rSet the Helper password to %arg-4% for user %arg-3%"
+                        else:
+                            send "{@Prefix} &r%player% Does not have Helper set in their staff type! (/staffauth promote helper <player>)"
+                    else:
+                        send "{@Prefix} &r%player% Does not have auth.staff set in their permission node! (/staffauth mark staff <player>)"
+
+                # MOD PASSWORD
+
+                else if arg 2 is "mod":
+                    if arg 3 has permission "auth.staff":
+                        if {ismod.%arg-3%} is true:
+                            set {modpassword.%arg-3%} to arg 4
+                            send "{@Prefix} &rSet the Mod password to %arg-4% for user %arg-3%"
+                        else:
+                            send "{@Prefix} &r%player% Does not have Mod set in their staff type! (/staffauth promote mod <player>)"
+                    else:
+                        send "{@Prefix} &r%player% Does not have auth.staff set in their permission node! (/staffauth mark staff <player>)"
+                
+                # Superior Group
+
+                else if arg 2 is "sup":
+                    if arg 3 has permission "auth.staff":
+                        if {issup.%arg-3%} is true:
+                            set {suppassword.%arg-3%} to arg 4
+                            send "{@Prefix} &rSet the Superior password to %arg-4% for user %arg-3%"
+                        else:
+                            send "{@Prefix} &r%player% Does not have Sup set in their staff type! (/staffauth promote sup <player>)"
+                    else:
+                        send "{@Prefix} &r%player% Does not have auth.staff set in their permission node! (/staffauth mark staff <player>)"
+                
+                # ADMIN PASSWORD
+                
+                else if arg 2 is "admin":
+                    if arg 3 has permission "auth.staff":
+                        if {isadmin.%arg-3%} is true:
+                            set {adminpassword.%arg-3%} to arg 4
+                            send "{@Prefix} &rSet the Admin password to %arg-4% for user %arg-3%"
+                        else:
+                            send "{@Prefix} &r%player% Does not have Admin set in their staff type! (/staffauth promote admin <player>)"
+                    else:
+                        send "{@Prefix} &r%player% Does not have auth.staff set in their permission node! (/staffauth mark staff <player>)"
+                else:
+                    send "{@Prefix} &rThere is no such group *%arg-2%*! Valid groups are *helper* *mod* *supmod* and *admin*"
+            else:
+                send "{@Prefix} &cAccess Denied, Please contact your administrator. (Exit Code 18)"
+        # Mark User
+            
+        else if arg 1 is "mark":
+            if player has permission "auth.master":
+                if arg 2 is "staff":
+                    execute player command "lp user %arg-3% permission set auth.staff true"
+                    send "{@Prefix} &rMarked %arg-3% as a staff member (auth.staff)"
+                else:
+                    send "{@Prefix} Valid opperations for Mark is *staff*"
+            else:
+                send "{@Prefix}&c Access Denied, Please contact your administrator. (Exit Code 11)"
+
+        # Promote Functions
+
+        else if arg 1 is "promote":
+            if player has permission "auth.master":
+                if arg 2 is "helper":
+                    if arg 3 has permission "auth.staff":
+                        set {ishelper.%arg-3%} to true
+                        send "{@Prefix} &rPromoted %arg-3% to %arg-2% (Helper)"
+                    else:
+                        send "{@Prefix} %arg-3% does not have auth.staff set in their permission node!"
+
+                if arg 2 is "sup":
+                    if arg 3 has permission "auth.staff":
+                        set {issup.%arg-3%} to true
+                        send "{@Prefix} &rPromoted %arg-3% to %arg-2% (Superior)"
+                    else:
+                        send "{@Prefix} %arg-3% does not have auth.staff set in their permission node!"
+
+                if arg 2 is "mod":
+                    if arg 3 has permission "auth.staff":
+                        set {ismod.%arg-3%} to true
+                        send "{@Prefix} &rPromoted %arg-3% to %arg-2% (Mod)"
+                    else:
+                        send "{@Prefix} %arg-3% does not have auth.staff set in their permission node!"
+
+
+                if arg 2 is "admin":
+                    if arg 3 has permission "auth.staff":
+                        set {isadmin.%arg-3%} to true
+                        send "{@Prefix} &rPromoted %arg-3% to %arg-2% (Admin)"
+                    else:
+                        send "{@Prefix} %arg-3% does not have auth.staff set in their permission node!"
+            else:
+                send "{@Prefix}&c Access Denied, Please contact your administrator. (Exit Code 13)"
+
+            # Demote functions
+        
+        else if arg 1 is "demote":
+            if player has permission "auth.master":
+                if arg 2 is "helper":
+                    set {ishelper.%arg-3%} to false
+                    execute console command "lp user %arg-3% permission set auth.staff false"
+                    send "{@Prefix} &rDemoted %arg-3% (Helper)"
+                        
+                if arg 2 is "mod":
+                    set {ismod.%arg-3%} to false
+                    execute console command "lp user %arg-3% permission set auth.staff false"
+                    send "{@Prefix} &rDemoted %arg-3% (Mod)"
+
+                if arg 2 is "sup":
+                    set {issup.%arg-3%} to false
+                    execute console command "lp user %arg-3% permission set auth.staff false"
+                    send "{@Prefix} &rDemoted %arg-3% (Superior)"
+
+                if arg 2 is "admin":
+                    set {isadmin.%arg-3%} to false
+                    execute console command "lp user %arg-3% permission set auth.staff false"
+                    send "{@Prefix} &rDemoted %arg-3% (Admin)"
+                else:
+                    send "{@Prefix}&c Use a valid staff for the opperation demote (Exit code 17)"
+            else:
+                send "{@Prefix}&c Access Denied, Please contact your administrator. (Exit Code 12)"
+
+
+        #  Login functions
+        # Helper
+        else if arg 1 is "helper":
+            if player has permission "auth.staff":
+                send "{@Prefix} &aCheck 1 Passed"
+                if {ishelper.%player%} is true:
+                    send "{@Prefix} &aCheck 2 Passed"
+                    if arg 2 is {helperpassword.%player%}:
+                        send "{@Prefix} &aCheck 3 Passed"
+                        execute console command "lp user %player% parent add {@HelperGroup}"
+                        send "{@Prefix} &rAuthentication Success! (Helper)"
+                    else:
+                        send "{@Prefix} &cAuth Denied, Please contact your administrator. (Exit Code 3)"
+                else:
+                    send "{@Prefix} &cAuth Denied, Please contact your administrator. (Exit Code 2)"
+            else:
+                send "{@Prefix} &cAuth Denied, Please contact your administrator. (Exit Code 1)"
+        
+        # Mod
+        else if arg 1 is "mod":
+            if player has permission "auth.staff":
+                send "{@Prefix} &aCheck 1 Passed"
+                if {ismod.%player%} is true:
+                    send "{@Prefix} &aCheck 2 Passed"
+                    if arg 2 is {modpassword.%player%}:
+                        send "{@Prefix} &aCheck 3 Passed"
+                        execute console command "lp user %player% parent add {@ModGroup}"
+                        send "{@Prefix} &rAuthentication Success! (Mod)"
+                    else:
+                        send "{@Prefix} &cAuth Denied, Please contact your administrator. (Exit Code 16)"
+                else:
+                    send "{@Prefix} &cAuth Denied, Please contact your administrator. (Exit Code 15)"
+            else:
+                send "{@Prefix} &cAuth Denied, Please contact your administrator. (Exit Code 14)"
+        # Superior
+        else if arg 1 is "sup":
+            if player has permission "auth.staff":
+                send "{@Prefix} &aCheck 1 Passed"
+                if {issup.%player%} is true:
+                    send "{@Prefix} &aCheck 2 Passed"
+                    if arg 2 is {suppassword.%player%}:
+                        send "{@Prefix} &aCheck 3 Passed"
+                        execute console command "lp user %player% parent add {@SupGroup}"
+                        send "{@Prefix} &rAuthentication Success! (Mod)"
+                    else:
+                        send "{@Prefix} &cAuth Denied, Please contact your administrator. (Exit Code 6)"
+                else:
+                    send "{@Prefix} &cAuth Denied, Please contact your administrator. (Exit Code 5)"
+            else:
+                send "{@Prefix} &cAuth Denied, Please contact your administrator. (Exit Code 4)"
+
+        # Admin
+        else if arg 1 is "admin":
+            if player has permission "auth.staff":
+                send "{@Prefix} &aCheck 1 Passed"
+                if {isadmin.%player%} is true:
+                    send "{@Prefix} &aCheck 2 Passed"
+                    if arg 2 is {adminpassword.%player%}:
+                        send "{@Prefix} &aCheck 3 Passed"
+                        execute console command "lp user %player% parent add {@AdminGroup}"
+                        send "{@Prefix} &rAuthentication Success! (Admin)"
+                    else:
+                        send "{@Prefix} &cAuth Denied, Please contact your administrator. (Exit Code 9)"
+                else:
+                    send "{@Prefix} &cAuth Denied, Please contact your administrator. (Exit Code 8)"
+            else:
+                send "{@Prefix} &cAuth Denied, Please contact your administrator. (Exit Code 7)"
+        else:
+            send "{@Prefix} &cThe opperation you tried to preform is not yet defined. (Exit Code 10)"
+on join:
+    if "{@Mode}" is "join" or "both":
+        if player has permission "auth.staff":
+            execute console command "lp user %player% parent remove {@HelperGroup}"
+            execute console command "lp user %player% parent remove {@ModGroup}"
+            execute console command "lp user %player% parent remove {@SupGroup}"
+            execute console command "lp user %player% parent remove {@AdminGroup}"
+on quit:
+    if "{@Mode}" is "quit" or "both":
+        if player has permission "auth.staff":
+            execute console command "lp user %player% parent remove {@HelperGroup}"
+            execute console command "lp user %player% parent remove {@ModGroup}"
+            execute console command "lp user %player% parent remove {@SupGroup}"
+            execute console command "lp user %player% parent remove {@AdminGroup}"
+on load:
+    send "{@Prefix} Staff Authentication has been loaded" to all players
+    send "{@Prefix} Skript made by TheTrouper##6969" to all players
+
+on tab complete of "/staffauth":
+    set tab completions of position 1 to "helper", "mod", "sup" and "admin"
+    if event-player has permission "auth.master": 
+        set tab completions of position 1 to "mark", "promote", "helper", "mod", "sup", "admin", "setpass" and "demote"
+        set tab completions of position 2 to "staff", "helper", "mod", "sup" and "admin"
+        set tab completions of position 4 to "password"
