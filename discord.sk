@@ -15,7 +15,7 @@ options:
 	
 command /discord:
 	trigger:
-		send "&d&l0 &b&l<link:{@Link}> Click This message to join our discord! &d&k0" to player
+		send "&d&k0 &b&l<link:{@Link}> Click This message to join our discord! &d&k0" to player
 
 command /discordbroadcast:
 	permission: discordbroadcast.announce
