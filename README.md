@@ -17,5 +17,5 @@
 > Demoting a member
 1) `/staffauth demote helper/mod/sup/admin Notch`
 		This will automaticaly un mark them as a staffmember
-Reseting passwords
+> Reseting passwords
 1) `/staffauth setpass helper/mod/sup/admin Notch Password`
