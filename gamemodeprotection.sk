@@ -1,0 +1,49 @@
+#==============================================
+#      Protect Gamemode (PGM)
+# Skript Made By TheTrouper#6969
+# DO NOT DISTRIBUTE WITHOUT PREMISSION
+# Protects your gamemode when you change dimensions
+#==============================================
+
+options:
+    Prefix: &9Gamemode>&7
+
+
+command /protectgamemode:
+    permission: pgm.use
+    aliases: pgm
+    trigger:
+        if player's gamemode is spectator:
+            if {pgm.spectator.%player%} is not true:
+                set {pgm.spectator.%player%} to true
+                send "{@Prefix} &aEnabled &7PGM for spectator" to player
+            else if {pgm.spectator.%player%} is true:
+                set {pgm.spectator.%player%} to false
+                send "{@Prefix} &cDisabled &7PGM for spectator" to player
+        if player's gamemode is survival:
+            if {pgm.survival.%player%} is not true:
+                set {pgm.survival.%player%} to true
+                send "{@Prefix} &aEnabled &7PGM for survival" to player
+            else if {pgm.survival.%player%} is not true:
+                set {pgm.survival.%player%} to false
+                send "{@Prefix} &cDisabled &7PGM for survival" to player
+        if player's gamemode is creative:
+            if player has permission pgm.creative:
+                if {pgm.creative.%player%} is not true:
+                    set {pgm.creative.%player%} to true
+                    send "{@Prefix} &aEnabled &7PGM for creative" to player
+                else if {pgm.creative.%player%} is not true:
+                    set {pgm.creative.%player%} to false
+                    send "{@Prefix} &cDisabled &7PGM for creative" to player
+
+on world change:
+    if {pgm.spectator.%player%} is true:
+        send "{@Prefix} Successfuly protected your gamemode"
+        set player's gamemode to spectator
+    else if {pgm.survival.%player%} is true:
+        send "{@Prefix} Successfuly protected your gamemode"
+        set player's gamemode to survival
+    else if {pgm.creative.%player%} is true:
+        if player has permission pgm.creative:
+            send "{@Prefix} Successfuly protected your gamemode"
+            set player's gamemode to creative
