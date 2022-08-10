@@ -1,93 +1,146 @@
 #==============================================
-# Ad Remind (Advertisement reminder for minehut)
 # Skript Made By TheTrouper#6969
 # DO NOT DISTRIBUTE WITHOUT PREMISSION
-# Copy#001
+# Advertisement reminder for minehut
 #==============================================
 options:
 
 	# The Prefix for all chat messages
-	Prefix: &7[&aA&bR&7]
+	Prefix: &9Advertising>&7
 	
 	# Set What Sound will be played 1 minute before kick
-	Sound: "block.note_block.flute"
+	Sound: "block.note_block.pling"
 	
 	# What will be broadcasted when the player is kicked
 	Broadcast: &bHas just been sent back to the lobby to advertise, You too can set advertise reminders with /ad!
 	
-	# Set the message for what will be sent at the 1 minute warning
-	Warning: &c&lWarning: &7You will be kicked in 1 minute to advertise!
+	# Set when the players will get a warning before kick
+	Warning: 30
 
 command ad <text> [<text>]:
-	usage: /ad (Minehut rank)<default|vip|pro|legend|patron>
+	usage: /ad (Minehut rank) <default|vip|pro|legend|patron>
 	trigger:
-		if arg-1 is "default":
-			send "<link:https://discord.gg/u4jjBKeydu> {@Prefix} &bYou will be kicked in 8 minutes to go /ad"
-			wait 7 minutes
-			play sound {@Sound} to player
-			send "<link:https://discord.gg/u4jjBKeydu> {@Prefix} {@Warning}" to player
-			wait 1 minute
-			broadcast "<link:https://discord.gg/u4jjBKeydu>{@Prefix} &c%player% {@Broadcast}"
-			kick player
-		else if arg-1 is "vip":
-			send "<link:https://discord.gg/u4jjBKeydu>{@Prefix} &bYou will be kicked in 7 minutes to go /ad"
-			wait 6 minutes
-			play sound {@Sound} to player
-			send "<link:https://discord.gg/u4jjBKeydu>{@Prefix} {@Warning} &7[Made By TheTrouper##6969]" to player
-			wait 1 minute
-			broadcast "<link:https://discord.gg/u4jjBKeydu>{@Prefix} &c%player% {@Broadcast} &7[Made By TheTrouper##6969]"
-			kick player
-		else if arg-1 is "pro":
-			send "<link:https://discord.gg/u4jjBKeydu>{@Prefix} &bYou will be kicked in 5 minutes to go /ad"
-			wait 4 minutes
-			play sound {@Sound} to player
-			send "<link:https://discord.gg/u4jjBKeydu>{@Prefix} {@Warning} &7[Made By TheTrouper##6969]" to player
-			wait 1 minute
-			broadcast "<link:https://discord.gg/u4jjBKeydu>{@Prefix} &c%player% {@Broadcast} &7"
-			kick player
-		else if arg-1 is "legend":
-			send "<link:https://discord.gg/u4jjBKeydu>{@Prefix} &bYou will be kicked in 3 minutes to go /ad"
-			wait 2 minutes
-			play sound {@Sound} to player
-			send "<link:https://discord.gg/u4jjBKeydu>{@Prefix} {@Warning}" to player
-			wait 1 minute
-			broadcast "<link:https://discord.gg/u4jjBKeydu>{@Prefix} &c%player% {@Broadcast}"
-			kick player
-		else if arg-1 is "patron":
-			send "<link:https://discord.gg/u4jjBKeydu>{@Prefix} &bYou will be kicked in 1 minute to go /ad"
-			wait 1 minutes
-			play sound {@Sound} to player
-			send "<link:https://discord.gg/u4jjBKeydu>{@Prefix} {@Warning}" to player
-			wait 10 seconds
-			broadcast "<link:https://discord.gg/u4jjBKeydu>{@Prefix} &c%player% {@Broadcast}"
-			kick player
-		else if arg-1 is "test":
-			send "<link:https://discord.gg/u4jjBKeydu>{@Prefix} &bYou will be fake kicked in TESTING ONLY seconds (10) to go /ad &7[Made By TheTrouper##6969]"
-			wait 10 seconds
-			play sound {@Sound} to player
-			send "<link:https://discord.gg/u4jjBKeydu>{@Prefix} TESTING ONLY you will be kicked in 10 seconds" to player
-			wait 10 seconds
-			broadcast "<link:https://discord.gg/u4jjBKeydu>{@Prefix} &c%player% has been not kicked This is for testing only {@Broadcast}"
-			send "&c&lyou would have been kicked but this is just a test"
-		else if arg-1 is "ogrestupe":
-			if length of arg-2 >= 80:
-				set {l.%player%} to length of arg-2
-				send "Ad message is too long (%{l.%player%}% Characters)"
-			else:
-				send "&d[AD] &6[Legend] %player%&r: /join ogrestupe %colored arg-2%"
+		if {firstad.%player's uuid%} is not true:
+			set {firstad.%player's uuid%} to true
+			send "{@Prefix} We have detected this to be your first time running that command! This command is meant to be used &l&nafter&r&7 going to the minehut hub, advertising then comming back. Go advertise and when you log back in, set your timer."
+		else:
+			if arg 1 is "yes":
+				kick player due to "{@Prefix} You have been sent to the lobby to advertise!"
+				broadcast "{@Prefix} %player% has been sent back to the lobby to advertise! You can set ad reminders with /ad <your minehut rank>"
+				set {timer.%player's uuid%} to 0
+			else if arg 1 is "no":
+				send "{@Prefix} You have &cCanceled&7 the advertisement reminding timer!"
+				set {timer.%player's uuid%} to 0
+			else if arg 1 is "auto":
+				if {autoad.%player's uuid%} is true:
+					set {autoad.%player's uuid%} to false
+					send "{@Prefix} Set AutoAd to &cfalse&7! (You wont be kicked automaticaly)"
+				else: 
+					set {autoad.%player's uuid%} to true
+					send "Set AutoAd to &aTrue&7! (You will be kicked automaticaly)"
+				
+			else if arg 1 is "default":
+				send "{@Prefix} You have enabled the &e%arg-1%&7 advertisment remind timer!"
+				set {timer.%player's uuid%} to 960
+				loop {timer.%player's uuid%} times:
+					if {timer.%player's uuid%} is {@Warning}:
+						play sound {@Sound} to player
+						send "{@Prefix} You will be sent back to the lobby in {@Warning} seconds to go advertise!"
+					if {timer.%player's uuid%} = 1:
+						if {autoad.%player's uuid%} is true:
+							play sound {@Sound} to player
+							execute player command "/ad yes"
+						else:
+							play sound {@Sound} to player
+							send "{@Prefix} This is your reminder to go advertise in the minehut lobby Click Yes to go to the hub, click No to cancel!"
+							send "<command:/ad yes>&a&l[Yes] <command:/ad no>&c&l[No]"
+						
+					remove 1 from {timer.%player's uuid%}
+					wait 1 second
+			else if arg 1 is "vip":
+				send "{@Prefix} You have enabled the &e%arg-1%&7 advertisment remind timer!"
+				set {timer.%player's uuid%} to 840
+				loop {timer.%player's uuid%} times:
+					if {timer.%player's uuid%} is {@Warning}:
+						play sound {@Sound} to player
+						send "{@Prefix} You will be sent back to the lobby in {@Warning} seconds to go advertise!"
+					if {timer.%player's uuid%} = 1:
+						if {autoad.%player's uuid%} is true:
+							play sound {@Sound} to player
+							execute player command "/ad yes"
+						else:
+							play sound {@Sound} to player
+							send "{@Prefix} This is your reminder to go advertise in the minehut lobby Click Yes to go to the hub, click No to cancel!"
+							send "<command:/ad yes>&a&l[Yes] <command:/ad no>&c&l[No]"
+						
+					remove 1 from {timer.%player's uuid%}
+					wait 1 second
+			else if arg 1 is "pro":
+				send "{@Prefix} You have enabled the &e%arg-1%&7 advertisment remind timer!"
+				set {timer.%player's uuid%} to 600
+				loop {timer.%player's uuid%} times:
+					if {timer.%player's uuid%} is {@Warning}:
+						play sound {@Sound} to player
+						send "{@Prefix} You will be sent back to the lobby in {@Warning} seconds to go advertise!"
+					if {timer.%player's uuid%} = 1:
+						if {autoad.%player's uuid%} is true:
+							play sound {@Sound} to player
+							execute player command "/ad yes"
+						else:
+							play sound {@Sound} to player
+							send "{@Prefix} This is your reminder to go advertise in the minehut lobby Click Yes to go to the hub, click No to cancel!"
+							send "<command:/ad yes>&a&l[Yes] <command:/ad no>&c&l[No]"
+						
+					remove 1 from {timer.%player's uuid%}	
+					wait 1 second
+			else if arg 1 is "legend":
+				send "{@Prefix} You have enabled the &e%arg-1%&7 advertisment remind timer!"
+				set {timer.%player's uuid%} to 360
+				loop {timer.%player's uuid%} times:
+					if {timer.%player's uuid%} is {@Warning}:
+						play sound {@Sound} to player
+						send "{@Prefix} You will be sent back to the lobby in {@Warning} seconds to go advertise!"
+					if {timer.%player's uuid%} = 1:
+						if {autoad.%player's uuid%} is true:
+							play sound {@Sound} to player
+							execute player command "/ad yes"
+						else:
+							play sound {@Sound} to player
+							send "{@Prefix} This is your reminder to go advertise in the minehut lobby Click Yes to go to the hub, click No to cancel!"
+							send "<command:/ad yes>&a&l[Yes] <command:/ad no>&c&l[No]"
+						
+					remove 1 from {timer.%player's uuid%}
+					wait 1 second
+			else if arg 1 is "patron":
+				send "{@Prefix} You have enabled the &e%arg-1%&7 advertisment remind timer!"
+				set {timer.%player's uuid%} to 120
+				loop {timer.%player's uuid%} times:
+					if {timer.%player's uuid%} is {@Warning}:
+						play sound {@Sound} to player
+						send "{@Prefix} You will be sent back to the lobby in {@Warning} seconds to go advertise!"
+					if {timer.%player's uuid%} = 1:
+						if {autoad.%player's uuid%} is true:
+							play sound {@Sound} to player
+							execute player command "/ad yes"
+						else:
+							play sound {@Sound} to player
+							send "{@Prefix} This is your reminder to go advertise in the minehut lobby Click Yes to go to the hub, click No to cancel!"
+							send "<command:/ad yes>&a&l[Yes] <command:/ad no>&c&l[No]"
+						
+					remove 1 from {timer.%player's uuid%}
+					wait 1 second	
+			else if arg 1 is "remaining":
+				send "{@Prefix} You have &a%{timer.%player's uuid%}% seconds&7 Remaining before you can advertise again!"
+			else if arg 1 is "ogrestupe":
+				send "{@Prefix} Testing your Advertisement... (HEX DOES NOT WORK)"
+				wait 20 ticks
+				if length of arg 2 is less than 80:
+					send "&d[AD]&6 [LEGEND] %player%&r: %colored arg 2%" to player
+				else:
+					send "{@Prefix} Advertisement too long! (%length of arg 2%)"
+			
+			
 
 on tab complete:
 	if event-string contains "/ad":
-		set tab completions of position 1 to "default", "vip", "pro", "legend", "patron" and "ogrestupe"
-
-
-# Ver: 1.2
-# Changelog:
-# 1.0:
-# Arguments Added
-# 1.1:
-# Tab Completer Added
-# 1.2:
-# Options Section Added
-# Warning added before kick
-# Test mode added
+		set tab completions of position 1 to "default", "vip", "pro", "legend", "patron", "remaining" and "ogrestupe"
