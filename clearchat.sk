@@ -6,17 +6,11 @@
 #==============================================
 options:
 	# How long the chat clear will be (200 for Vanilla 1000 for Clients with longer scrolling)
-	Length: 1000
+	Length: 100
 	
 	# Prefix
 	Prefix: &8[&5CC&b+&8]
-
-	# (true or false) swear filter state
-	Swear: true
-
-	# (true or false) spam filter state
-	Spam: true
-
+	
 	# Notification Players
 	NotifPlayer: &b&lChat has been cleared %newline%&b&lProfanity is not allowed
 	
@@ -24,15 +18,18 @@ options:
 	NotifStaff: &2&l%player% &a&lCleared the chat
 	
 	# Swears blocked (Can be bypassed VERY EASY) format moment
-	block: "fuck" or "fvck" or "fck" or "fuk" or "f*ck" or "bitch" or "b1tch" or "b*tch" or "b1ch" or "bish" or "b1sh" or "slut" or "hoe" or "h0e" or "shit" or "sh1t" or "sh*t" or "nigger" or "n1gger" or "n1gg3r" or "nigg3" or "nigg" or "niger" or "n1ger" or "n1gger" or "n1gga" or "n1gg@" or "nigg@" or "cum" or "semen" or "tits" or "titties" or "retard" or "gay" or "g@y" or "r3t@rd" or "ret@rd" or "r3tard" or "cream" or "balls" or "n1g" or "blackie" or "fuc" or "nega" or "negar" or "finger" or "suck" or "scum" or "sc@m" or "sc*m" or "fake" or "f@ke" or "minge" or "spaz" or "shag" or "pussy" or "1984" or "penis" or "p3n1s" or "pen1s" or "p3n1s"
 	
 command /cc:
 	aliases: /chatclear, /cchat
 	permission: chatclear.use
 	trigger:
 		loop {@Length} times:
-			send " " to all players where [input doesn't have permission "chatclear.use"]
-			send "." to all players where [input doesn't have permission "chatclear.use"]
+			send "&0." to all players where [input doesn't have permission "chatclear.use"]
+			send "&0   " to all players where [input doesn't have permission "chatclear.use"]	
+			send "&0      " to all players where [input doesn't have permission "chatclear.use"]	
+			send "&0    " to all players where [input doesn't have permission "chatclear.use"]	
+			send "&0  " to all players where [input doesn't have permission "chatclear.use"]	
+			send "&0 " to all players where [input doesn't have permission "chatclear.use"]	
 		send "&6&l&m------------------------------------" to all players
 		send "{@Prefix} {@NotifPlayer}" to all players where [input doesn't have permission "chatclear.use"]
 		send "{@Prefix} {@NotifStaff}" to all players where [input has permission "chatclear.use"]
@@ -52,23 +49,18 @@ command /clearchatinfo:
 		
 # Prototype for automute if bypassing other spam filters
 on chat:
-	set {cm.%player%} to message
-	if {@Spam} is true:
-		if player does not have permission "clearchat.use":
-			if {lm.%player%} = message:
-				send "&c[Anti Spam] &a%player%&7: %message%" to all players where [input has permission "chatclear.use"]
-				cancel event
-				send "&c&lHEY! &r&7We do not tolorate spamming in chat. Please decrease your use of repeated messages. &lBypassing this in any capacity will get you muted"
-			else:
-				set {lm.%player%} to message
-on chat:
-	set {cm.%player%} to message
-	if {@Swear} is true:
-		if player does not have permission "clearchat.use":
-			replace all " " in {cm.%player%} with ""
-			replace all "." in {cm.%player%} with ""
-			if {cm.%player%} contains {@block}:
-				send "&c[Antiswear Chat] &a%player%&7: %message%" to all players where [input has permission "chatclear.use"]
-				cancel event
-				send "&c&lHEY! &r&7We do not tolorate swearing in chat. Please decrease your use of profanity. &lBypassing this in any capacity will get you muted"
+	set {_team} to placeholder "betterTeams_tag" of player
+	if placeholder "betterTeams_tag" of player is not set:
+		if group of player is "knight" or "booster" or "bishop" or "rook" or "queen" or "king":
+			set the chat format to "&r%hexfix(player's prefix)%%player%%hexfix(player's suffix)% &8[&7%player's max health% &c❤&8] &8➡<white> %message%"
+		else:
+			set the chat format to "&r%hexfix(player's prefix)%%player%%hexfix(player's suffix)% &8[&7%player's max health% &c❤&8] &8➡&7 %message%"
+	else:
+		if group of player is "knight" or "booster" or "bishop" or "rook" or "queen" or "king":
+			set the chat format to "&8[&7%{_team}%&8] &r%hexfix(player's prefix)%%player%%hexfix(player's suffix)% &8[&7%player's max health% &c❤&8] &8➡<white> %message%"
+		else:
+			set the chat format to "&8[&7%{_team}%&8] &r%hexfix(player's prefix)%%player%%hexfix(player's suffix)% &8[&7%player's max health% &c❤&8] &8➡&7 %message%"
 
+function hexfix(f: text) :: text:
+    return formatted (join (regex split (join (regex split {_f} by "(?<=(&##([a-fA-f0-9]{6})))") by ">") by "&##(?=([a-fA-f0-9]{6}))") by "<##")
+	
