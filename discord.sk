@@ -15,18 +15,17 @@ options:
 	
 command /discord:
 	trigger:
-		send "&d&k0 &b&l<link:{@Link}> Click This message to join our discord! &d&k0" to player
-
+		send "&9Discord> &b<link:{@Link}> Click This message to join our discord!" to player
 command /discordbroadcast:
 	permission: discordbroadcast.announce
 	aliases: /db
 	trigger:
 		send "<link:{@Link}>&6&m=================================" to all players
-		send "<link:{@Link}>&a&lMake sure to join our discord!" to all players
+		send "<link:{@Link}> &a&lMake sure to join our discord!" to all players
+		send "<link:{@Link}> &c&l Want better loot? %newline%&7Join the discord for some shiny new gear!" to all players
 		send "<link:{@Link}> &9Click anywhere here or follow this link" to all players
 		send "<link:{@Link}> &b{@Link}" to all players
 		send "<link:{@Link}>&6&m=================================" to all players
-
 command /dstaff:
 	permission: discordbroadcast.announce
 	trigger:
@@ -40,15 +39,27 @@ command /dstaff:
 
 every {@Interval}:
 		send "<link:{@Link}>&6&m=================================" to all players
-		send "<link:{@Link}>&a&lJoin our discord for the latest updates!" to all players
-		send "<link:{@Link}> &9Click anywhere here or follow this link" to all players
-		send "<link:{@Link}> &b{@Link}" to all players
+		send "<link:{@Link}> &b&l Want better loot? %newline%&7 Join the discord for some shiny new gear!" to all players
+		send "<link:{@Link}> &eClick anywhere here or follow this link" to all players
+		send "<link:{@Link}> &9{@Link}" to all players
 		send "<link:{@Link}>&6&m=================================" to all players
 		
 command sellout:
 	permission: dupe.announce
 	trigger:
 		send "<link:{@Link}>&6&m=================================" to all players
-		send "<link:{@Link}> &aDO /buy for great rank deals" to all players
+		send "<link:{@Link}> &aDO /BUY FOR GREAT RANK DEALS" to all players
 		send "<link:{@Link}> &b&k0&r &dSTARTING AT 2$ FOR RANKS WITH FLY &b&k0" to all players
 		send "<link:{@Link}>&6&m=================================" to all players
+command /setdckit:
+	permission: op
+	trigger:
+		set {discordkit} to player's held item
+		send "&9Kit> &7The Discord kit should have been set"
+command /discordkit:
+	permission: discordkit.use
+	cooldown: 60 minutes
+	cooldown message: &cYou can only claim a discord kit every hour!
+	trigger:
+		give player {discordkit}
+		send "&9Kit> &7The Discord kit should have been given to you"
