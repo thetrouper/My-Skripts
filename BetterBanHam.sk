@@ -1,0 +1,175 @@
+# Better BanHammer
+
+options:
+#========================== IMPORTANT SETTINGS ===========================
+
+	# Prefix for chat messages
+	Prefix: &9BanHam>&7
+
+	# Should you be cleared when activating BanHam
+	Clear: false
+
+	# Should you be vanished when activating BanHam
+	Vanish: false
+
+	# Smite players on punish?
+	Smite: true
+	SmiteCommand: /smite
+
+#============================== AXE CONFIGS ==============================
+
+	# Netherite Axe Config
+
+		# Name of axe
+	NAxe: &4&lPermanent Ban (IP, Reason: Ban Evading)
+		# Command to execute
+	CMDn: /ipban %clicked player% Ban Evading
+	CMDnm: /ipban player Ban Evading
+
+	# Diamond Axe Config
+
+		# Name of axe
+	DAxe: &c&lPermanent (Non IP, Reason: Exploiting Glitches)
+		# Command to execute
+	CMDd: /ban %clicked player% Exploiting Glitches
+	CMDdm: /ban player Exploiting Glitches
+
+	# Iron Axe Config
+
+		# Name of axe
+	IAxe: &f&l30 Day Ban (Reason: Greifing)
+		# Command to execute
+	CMDi: /ban %clicked player% 30d Greifing
+	CMDim: /ban player 30d Griefing
+
+	# Gold Axe Config
+
+		# Name of axe
+	GAxe: &e3 Day Ban (Reason: Malicious Hacks)
+		# Command to execute
+	CMDg: /ban %clicked player% 3d Malicious Hacks
+	CMDgm: /ban player 3d Malicious Hacks
+
+	# Stone Axe Config
+
+		# Name of axe
+	SAxe: &730 Minute Jail (Reason: Naked killing)
+		# Command to execute
+	CMDs: /jail %clicked player% Hacker 30m Naked killing
+	CMDsm: /jail player Hacker 30m Naked Killing
+
+	# Wood Axe Config
+
+		# Name of axe
+	WAxe: &61 Hour Mute (Chat filter bypass)
+		# Command to execute
+	CMDw: /mute %clicked player% 1h Swear Filter Bypass
+	CMDwm: /mute player 1h Swear Filter Bypass
+
+	# Ice Config
+		# Name of ice
+	Ice: &bFreeze Player
+		# Command to execute
+	CMDice: Vulcan Freeze %clicked player%
+	CMDicem: Vulcan Freeze player
+
+	# Stick Config
+		# Name of stick
+	Staff: &9Smite Staff
+		# Command to execute
+	CMDstaff: /smite
+	CMDstaffm: /smite
+
+
+#============================== End of config DO NOT EDIT SKRIPT==============================
+
+command /banhammer:
+	aliases: bh, hammer, banham, bham
+	permission: banhammer.use
+	trigger:
+		if {BH.active.%player%} is not true:
+			set {BH.active.%player%} to true
+			if {@Clear} is true:
+				remove all items from player's inventory
+			give player Netherite axe named "{@NAxe}" with lore "&7Command:" and "&a{@CMDnm}"
+			give player Diamond axe named "{@DAxe}" with lore "&7Command:" and "&a{@CMDdm}"
+			give player iron axe named "{@IAxe}" with lore "&7Command:" and "&a{@CMDim}"
+			give player stone axe named "{@SAxe}" with lore "&7Command:" and "&a{@CMDsm}"
+			give player gold axe named "{@GAxe}" with lore "&7Command:" and "&a{@CMDgm}"
+			give player wood axe named "{@WAxe}" with lore "&7Command:" and "&a{@CMDwm}"
+			give player blue ice named "{@Ice}" with lore "&7Command:" and "&a{@CMDicem}"
+			give player stick named "{@Staff}" with lore "&7Command:" and "&a{@CMDstaffm}"
+			send "{@Prefix} &aEnabled &7All Hammers."
+		else if {BH.active.%player%} is true:
+			set {BH.active.%player%} to false
+			send "{@Prefix} &cDisabled &7All Hammers."
+
+on right click on player holding Netherite axe:
+	if player has permission "banhammer.use":
+		if {BH.active.%player%} is true:
+			if player is holding netherite axe named "{@NAxe}":
+			cancel event
+			if {Smite} is true:
+				execute player command "{SmiteCommand}"
+			execute player command "{@CMDn}"
+
+on right click on player holding diamond axe:
+	if player has permission "banhammer.use":
+		if {BH.active.%player%} is true:
+			if player is holding diamond axe named "{@DAxe}":
+			cancel event
+			if {Smite} is true:
+				execute player command "{SmiteCommand}"
+			execute player command "{@CMDd}"
+
+on right click on player holding iron axe:
+	if player has permission "banhammer.use":
+		if {BH.active.%player%} is true:
+			if player is holding iron axe named "{@IAxe}":
+			cancel event
+			if {Smite} is true:
+				execute player command "{SmiteCommand}"
+			execute player command "{@CMDi}"
+
+on right click on player holding gold axe:
+	if player has permission "banhammer.use":
+		if {BH.active.%player%} is true:
+			if player is holding gold axe named "{@GAxe}":
+			cancel event
+			if {Smite} is true:
+				execute player command "{SmiteCommand}"
+			execute player command "{@CMDg}"
+
+on right click on player holding stone axe:
+	if player has permission "banhammer.use":
+		if {BH.active.%player%} is true:
+			if player is holding stone axe named "{@SAxe}":
+			cancel event
+			if {Smite} is true:
+				execute player command "{SmiteCommand}"
+			execute player command "{@CMDs}"
+
+on right click on player holding wood axe:
+	if player has permission "banhammer.use":
+		if {BH.active.%player%} is true:
+			if player is holding wood axe named "{@WAxe}":
+			cancel event
+			if {Smite} is true:
+				execute player command "{SmiteCommand}"
+			execute player command "{@CMDw}"
+
+on right click on player holding blue ice:
+	if player has permission "banhammer.use":
+		if {BH.active.%player%} is true:
+			if player is holding blue ice named "{@Ice}":
+			cancel event
+			if {Smite} is true:
+				execute player command "{SmiteCommand}"
+			execute player command "{@CMDice}"
+
+on right click holding stick:
+	if player has permission "banhammer.use":
+		if {BH.active.%player%} is true:
+			if player is holding blue ice named "{@Staff}":
+			cancel event
+			execute player command "{@CMDstaff}"
