@@ -1,0 +1,35 @@
+# Night vision invisible by TheTrouper#6969
+
+options:
+	Prefix: &9Condition>&7
+
+command /nightvision:
+	aliases: nv, nvt, nvi
+	permission: nightvision.toggle
+	trigger:
+		if {nv::*} contains player:
+			remove player from {nv::*}
+			remove night vision from the player
+			send "{@Prefix} Night vision has been &cdisabled&7."
+		else if {nv::*} does not contain player:
+			add player to {nv::*}
+			send "{@Prefix} Night vision has been &aenabled&7."
+
+command /invisiblity:
+	aliases: iv, ivt, ivi
+	permission: nightvision.toggle
+	trigger:
+		if {iv::*} contains player:
+			remove player from {iv::*}
+			remove night vision from the player
+			send "{@Prefix} invisibility has been &cdisabled&7."
+		else if {iv::*} does not contain player:
+			add player to {iv::*}
+			send "{@Prefix} invisibility has been &aenabled&7."
+
+every second:
+	loop all players:
+		if {nv::*} contains player:
+			apply night vision without particles to loop-player for 100000 seconds
+		if {iv::*} contains player:
+			apply invisibility without particles to loop-player for 100000 seconds
