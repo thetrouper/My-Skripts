@@ -1,0 +1,40 @@
+# OgreDupe ELO system
+
+# New rating = Old rating + K * (Result - Expected result)
+# Expected result = 1 / (1 + 10^((Opponent's rating - Player's rating) / 400))
+# Result is the actual result of the game (1 for a win, 0.5 for a draw, and 0 for a loss).
+# K = how quickly a player's rating will change based on their performance. (We use 20)
+
+on load:
+	set {K} to 30
+
+on first join:
+	set {-ELO::%player's uuid%} to 800
+on join:
+	if {-ELO::%player's uuid%} is not set:
+		set {-ELO::%player's uuid%} to 800
+
+function EloUpdate(P: uuid, O: uuid, R: integer):
+	set {_ExpectedResult} to 1 / (1 + 10^(({-ELO::%{_O}%} - {-ELO::%{_P}%}) / 400))
+	# This next equation wasnt working so I had to spread it out, if you are able to fix it please pull request your code.
+	set {_RDIF} to {_R} - {_ExpectedResult}
+	set {_CHANGE} to {_RDIF} * {K}
+	set {-ELO::%{_P}%} to {-ELO::%{_P}%} + {_CHANGE}
+	set {_ExpectedResult} to {_ExpectedResult} * 100
+	send "&9ELO> &7We expected a %{_ExpectedResult}% Precent chance of you winning" to {_P}
+	if {_R} is 1:
+		send "&9ELO> &7And You Won" to {_P}
+	else if {_R} is less than 1:
+		send "&9ELO> &7And you lost" to {_P}
+	send "&9ELO> &7So your ELO is now %{-ELO::%{_P}%}%" to {_P}
+	send "&9ELO> &7Which makes your oponents ELO %{-ELO::%{_O}%}%" to {_P}
+
+command /elo <player>:
+	trigger:
+		send "&9ELO> &7%arg-1's uuid%'s ELO is %{-ELO::%arg-1's uuid%}%"
+
+on death:    
+	if victim is player:
+		if attacker is player:
+			EloUpdate(victim's uuid, attacker's uuid, 0)
+			EloUpdate(attacker's uuid, victim's uuid, 1)
